@@ -67,13 +67,13 @@ export default function FormPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-10">
+    <div className="min-h-screen bg-[#000000] flex items-center justify-center p-10">
       <div className="w-full max-w-2xl">
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">Zelosify Application</h1>
         </div>
 
-        <Card className="bg-gray-900/50 border-gray-800 backdrop-blur-sm shadow-2xl">
+        <Card className="bg-[#222222] border-gray-800 backdrop-blur-sm shadow-2xl">
           <CardHeader className="space-y-2 pb-8">
             <CardTitle className="text-2xl text-white font-semibold">Application Form</CardTitle>
             <CardDescription className="text-gray-400">
