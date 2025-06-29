@@ -70,7 +70,7 @@ export default function FormPage() {
     <div className="min-h-screen bg-[#000000] flex items-center justify-center p-10">
       <div className="w-full max-w-2xl">
         <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">Zelosify Application</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">Zelosify</h1>
         </div>
 
         <Card className="bg-[#222222] border-gray-800 backdrop-blur-sm shadow-2xl">
