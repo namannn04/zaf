@@ -67,11 +67,10 @@ export default function FormPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-10">
       <div className="w-full max-w-2xl">
         <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">Premium Application</h1>
-          <p className="text-gray-400 text-lg">Submit your details to join our exclusive program</p>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">Zelosify Application</h1>
         </div>
 
         <Card className="bg-gray-900/50 border-gray-800 backdrop-blur-sm shadow-2xl">
@@ -172,20 +171,8 @@ export default function FormPage() {
                 )}
               </Button>
             </div>
-
-            <div className="text-center pt-4">
-              <p className="text-gray-500 text-sm">By submitting this form, you agree to our terms and conditions.</p>
-            </div>
           </CardContent>
         </Card>
-
-        <div className="text-center mt-8">
-          <div className="inline-flex items-center gap-2 text-gray-600">
-            <div className="w-2 h-2 bg-gray-600 rounded-full"></div>
-            <div className="w-2 h-2 bg-gray-700 rounded-full"></div>
-            <div className="w-2 h-2 bg-gray-800 rounded-full"></div>
-          </div>
-        </div>
       </div>
     </div>
   )
