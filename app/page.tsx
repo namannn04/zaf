@@ -1,27 +1,33 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useDispatch, useSelector } from "react-redux"
-import { useState } from "react"
-import { updateForm, resetForm } from "@/store/formSlice"
-import type { RootState } from "@/store/store"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Loader2, Send, User, Mail, Phone, FileText } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { updateForm, resetForm } from "@/store/formSlice";
+import type { RootState } from "@/store/store";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Loader2, Send, User, Mail, Phone, FileText } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function FormPage() {
-  const form = useSelector((state: RootState) => state.form)
-  const dispatch = useDispatch()
-  const { toast } = useToast()
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const form = useSelector((state: RootState) => state.form);
+  const dispatch = useDispatch();
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateForm({ [e.target.name]: e.target.value }))
-  }
+    dispatch(updateForm({ [e.target.name]: e.target.value }));
+  };
 
   const handleSubmit = async () => {
     if (!form.name || !form.email || !form.phone) {
@@ -29,11 +35,21 @@ export default function FormPage() {
         title: "Validation Error",
         description: "Please fill in all required fields.",
         variant: "destructive",
-      })
-      return
+      });
+      return;
     }
 
-    setIsSubmitting(true)
+    const cleanPhone = form.phone.replace(/\D/g, "");
+    if (cleanPhone.length !== 10) {
+      toast({
+        title: "Phone Number Error",
+        description: "Phone number is incorrect.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
 
     try {
       const res = await fetch("/api/submit", {
@@ -42,48 +58,56 @@ export default function FormPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(form),
-      })
+      });
 
-      const result = await res.json()
+      const result = await res.json();
 
       if (result.success) {
         toast({
           title: "Success!",
           description: "Your application has been submitted successfully.",
-        })
-        dispatch(resetForm())
+        });
+        dispatch(resetForm());
       } else {
-        throw new Error("Submission failed")
+        throw new Error("Submission failed");
       }
     } catch (error) {
       toast({
         title: "Error",
         description: "Failed to submit your application. Please try again.",
         variant: "destructive",
-      })
+      });
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-[#000000] flex items-center justify-center p-10">
       <div className="w-full max-w-2xl">
         <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">Zelosify</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
+            Zelosify
+          </h1>
         </div>
 
         <Card className="bg-[#222222] border-gray-800 backdrop-blur-sm shadow-2xl">
           <CardHeader className="space-y-2 pb-8">
-            <CardTitle className="text-2xl text-white font-semibold">Application Form</CardTitle>
+            <CardTitle className="text-2xl text-white font-semibold">
+              Application Form
+            </CardTitle>
             <CardDescription className="text-gray-400">
-              Please provide your information below. All fields marked with * are required.
+              Please provide your information below. All fields marked with *
+              are required.
             </CardDescription>
           </CardHeader>
 
           <CardContent className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-white font-medium flex items-center gap-2">
+              <Label
+                htmlFor="name"
+                className="text-white font-medium flex items-center gap-2"
+              >
                 <User className="w-4 h-4" />
                 Full Name *
               </Label>
@@ -100,7 +124,10 @@ export default function FormPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-white font-medium flex items-center gap-2">
+              <Label
+                htmlFor="email"
+                className="text-white font-medium flex items-center gap-2"
+              >
                 <Mail className="w-4 h-4" />
                 Email Address *
               </Label>
@@ -118,7 +145,10 @@ export default function FormPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="phone" className="text-white font-medium flex items-center gap-2">
+              <Label
+                htmlFor="phone"
+                className="text-white font-medium flex items-center gap-2"
+              >
                 <Phone className="w-4 h-4" />
                 Phone Number *
               </Label>
@@ -129,14 +159,19 @@ export default function FormPage() {
                 type="tel"
                 value={form.phone}
                 onChange={handleChange}
-                placeholder="Enter your phone number"
+                placeholder="Enter your 10-digit phone number"
+                pattern="[0-9]{10}"
+                maxLength={10}
                 className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-gray-600 focus:ring-gray-600 h-12"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="resume" className="text-white font-medium flex items-center gap-2">
+              <Label
+                htmlFor="resume"
+                className="text-white font-medium flex items-center gap-2"
+              >
                 <FileText className="w-4 h-4" />
                 Resume Link
               </Label>
@@ -175,5 +210,5 @@ export default function FormPage() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

@@ -15,7 +15,7 @@ model Application {
   id        Int      @id @default(autoincrement())
   name      String
   email     String
-  phone     String
-  resume    String
+  phone     BigInt
+  resume    String?
   createdAt DateTime @default(now())
 }
